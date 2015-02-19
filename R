@@ -1,0 +1,25 @@
+R 棒グラフ　個別に表示する方法
+library(ggplot2)
+library(reshape)
+resultdata <- read.table("resultdata.txt", header=T, sep="\t")
+resultdata <- cbind(term=rownames(resultdata),resultdata)
+resultdata
+g <- ggplot()
+df <- melt(resultdata)
+head(df)
+g <- ggplot(
+	df,
+	aes(
+		x=term,
+		y=value,
+		fill = term
+		)
+)+geom_bar()+
+facet_grid(variable ~ .)
+plot(g)
+
+
+生成したデータをpngで保存する方法
+ png('data.png')
+plot(g)
+dev.off()
